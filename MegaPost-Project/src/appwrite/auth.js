@@ -49,11 +49,11 @@ export class AuthService {
         }
     }
 
-    async loginAccount(){
+    async logoutAccount(){
         try {
             await this.account.deleteSessions();
         } catch (error) {
-            console.log("AppWrite AuthService ::loginAccount error: ", error);
+            console.log("AppWrite AuthService ::logoutAccount error: ", error);
         }
     }
 }
