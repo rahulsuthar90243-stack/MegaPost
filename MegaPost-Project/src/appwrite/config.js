@@ -1,4 +1,4 @@
-import conf from '../conf.js';  
+import conf from '../configVariable/conf';
 import { Client, ID , Databases, Storage, Query} from 'appwrite';
 
 export class Serivice {
@@ -8,13 +8,13 @@ export class Serivice {
 
     constructor(){
         this.client
-        .setEndpoint(conf.appWriteURL)
-        .setProject(conf.appWriteProjectID);
+        .setEndpoint(conf.AppWriteURL)
+        .setProject(conf.AppWriteProjectID);
         this.Databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
  
-    async createPost({title, slug, content, featureImage, status, userId}){
+    async createPost({title, content, featureImage, status, userId}){
         try {
             const createPost = await this.Databases.createDocument(
                 conf.appwriteDatabaseID,
@@ -111,8 +111,8 @@ export class Serivice {
 
     async deleteFile(fileId){
         try {
-            return await this.bucket.deleteFile(
-                conf.appWriteBucketID,
+            await this.bucket.deleteFile(
+                conf.AppWriteBucketID,
                 fileId,
             )
             return true;

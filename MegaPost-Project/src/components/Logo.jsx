@@ -1,0 +1,7 @@
+const Logo = ({ width = "100px" }) => {
+  return (
+    <div style={{ width }}>logo</div>
+  )
+}
+
+export default Logo
