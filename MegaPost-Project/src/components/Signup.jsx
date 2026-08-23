@@ -8,21 +8,21 @@ import {useForm} from 'react-hook-form'
 
  function Signup() {
     const navigate = useNavigate();
-    const [error, setErroe] = useState();
+    const [error, setError] = useState();
     const dispatch = useDispatch();
     const {register, handleSubmit} = useForm();
 
     const create = async(data)=>{
-        setErroe("");
+        setError("");
         try {
-            const userData = await authService.createAccount(data);
+            const userData = await authService.createAccount(data);   //create account
             if(userData){
-                const userData = await authService.getCurrentUser()
+                const userData = await authService.getCurrentUser()   //get current user
                 if(userData) dispatch(login(userData));
                 navigate("/")
             }
         } catch (error) {
-            setErroe(error.message);
+            setError(error.message);
         }
     }
   return (
@@ -31,11 +31,11 @@ import {useForm} from 'react-hook-form'
         className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}
       >
         <div className="mb-2 flex justify-center">
-          <span className="inline-block w-full max-w-{100px}">
+          <span className="inline-block w-full max-w-[100px]">
             <Logo width="100%" />
           </span>
         </div>
-        <h2 className="text-cenetr text-2xl font-bold leading-tight">
+        <h2 className="text-center text-2xl font-bold leading-tight">
           Sign up to create account
         </h2>
 
@@ -45,7 +45,7 @@ import {useForm} from 'react-hook-form'
             to="/login"
             className="font-medium text-primary transition-all duration-200 hover:underline"
           >
-            Sign Ip
+            Sign In
           </Link>
         </p>
         {error && <p className="text-red-600 mt-8 text-center">
@@ -55,7 +55,7 @@ import {useForm} from 'react-hook-form'
                   <Input
                   label="Full Name: "
                   placeholder="Enter you full name"
-                  {...required("name", {
+                  {...register("name", {
                     required: true,
                   })}
                   />
@@ -75,7 +75,7 @@ import {useForm} from 'react-hook-form'
                     label="Password"
                     type="password"
                     placeholder="Enter your password"
-                    {...required("password", {
+                    {...register("password", {
                         required: true
                     })}
                     />
