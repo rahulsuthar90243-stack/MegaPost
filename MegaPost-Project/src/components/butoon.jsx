@@ -15,3 +15,5 @@ ClassName = '',
         </button>
     )
 }
+
+export default button

@@ -17,7 +17,7 @@ export class AuthService {
            const userAccount = await this.account.create(ID.unique(), email, password, name);
            if(userAccount){
             // call another function
-            return this.loginAccount({email, password});
+            return this.login({email, password});
            }else{
             return userAccount;
            }
@@ -44,7 +44,9 @@ export class AuthService {
                 return null;
             }
         } catch (error) {
-            console.log("AppWrite AuthService ::getCurrentUser error: ", error);
+            if (error.code !== 401) {
+                console.log("AppWrite AuthService ::getCurrentUser error: ", error);
+            }
             return null;
         }
     }
