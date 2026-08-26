@@ -3,22 +3,22 @@ import { Client, ID , Databases, Storage, Query} from 'appwrite';
 
 export class Serivice {
     client = new Client();
-    Databases;
+    databases;
     bucket;
 
     constructor(){
         this.client
         .setEndpoint(conf.AppWriteURL)
         .setProject(conf.AppWriteProjectID);
-        this.Databases = new Databases(this.client);
+        this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
     }
  
     async createPost({title, content, featureImage, status, userId}){
         try {
-            const createPost = await this.Databases.createDocument(
-                conf.appwriteDatabaseID,
-                conf.appWriteCollectionID,
+            const createPost = await this.databases.createDocument(
+                conf.AppWriteDatabaseID,
+                conf.AppWriteCollectionID,
                 ID.unique(),
                 {
                     title,
@@ -35,9 +35,9 @@ export class Serivice {
 
     async updatePost(slug, {title, content, featureImage, status}){
         try {
-            const updatePost = await this.Databases.updateDocument(
-                conf.appwriteDatabaseID,
-                conf.appWriteCollectionID,
+            const updatePost = await this.databases.updateDocument(
+                conf.AppWriteDatabaseID,
+                conf.AppWriteCollectionID,
                 slug,
                 {
                     title,
@@ -54,9 +54,9 @@ export class Serivice {
 
     async deletePost(slug){
         try {
-            await this.Databases.deleteDocument(
-                conf.appwriteDatabaseID,
-                conf.appWriteCollectionID,
+            await this.databases.deleteDocument(
+                conf.AppWriteDatabaseID,
+                conf.AppWriteCollectionID,
                 slug,
             )
             return true;
@@ -69,9 +69,9 @@ export class Serivice {
 
     async getPost(slug){
         try {
-            return await this.Databases.getDocument(
-                conf.appwriteDatabaseID,
-                conf.appWriteCollectionID,
+            return await this.databases.getDocument(
+                conf.AppWriteDatabaseID,
+                conf.AppWriteCollectionID,
                 slug,
             )
         } catch (error) {
@@ -82,9 +82,9 @@ export class Serivice {
 
     async getPosts(querys = [Query.equal("status", "active")]){
         try {
-            return await this.Databases.listDocuments(
-                conf.appwriteDatabaseID,
-                conf.appWriteCollectionID,
+            return await this.databases.listDocuments(
+                conf.AppWriteDatabaseID,
+                conf.AppWriteCollectionID,
                 querys,
             )
             
@@ -99,7 +99,7 @@ export class Serivice {
     async updateFile(file){
     try {
         return await this.bucket.createFile(
-            conf.appWriteBucketID,
+            conf.AppWriteBucketID,
             ID.unique(),
             file,
         )
@@ -124,7 +124,7 @@ export class Serivice {
 
     getFilePreview(fileId){
     return this.bucket.getFilePreview(
-        conf.appWriteBucketID,
+        conf.AppWriteBucketID,
         fileId,
     )    
     }
